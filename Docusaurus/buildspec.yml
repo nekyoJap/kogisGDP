@@ -1,0 +1,61 @@
+version: 0.2
+
+# AWS CodeBuild用のビルド設定ファイル
+# このファイルはCodeBuildプロジェクトで自動的に読み込まれます
+
+env:
+  variables:
+    NODE_VERSION: "18"
+  parameter-store:
+    # Systems Manager Parameter Storeから取得（推奨）
+    # S3_BUCKET_NAME: /docusaurus/s3-bucket-name
+    # CLOUDFRONT_DISTRIBUTION_ID: /docusaurus/cloudfront-id
+  # または環境変数で直接設定
+  # secrets-manager:
+  #   AWS_ACCESS_KEY: /docusaurus/credentials:access_key
+  #   AWS_SECRET_KEY: /docusaurus/credentials:secret_key
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 18
+    commands:
+      - echo "Installing dependencies..."
+      - npm ci
+  
+  pre_build:
+    commands:
+      - echo "Pre-build phase..."
+      - node --version
+      - npm --version
+  
+  build:
+    commands:
+      - echo "Building Docusaurus..."
+      - npm run build
+  
+  post_build:
+    commands:
+      - echo "Deploying to S3..."
+      # S3へのデプロイ
+      - aws s3 sync build/ s3://${S3_BUCKET_NAME} --delete --exclude ".git/*"
+      - echo "Deployment completed!"
+      
+      # CloudFrontのキャッシュクリア（オプション）
+      - |
+        if [ ! -z "${CLOUDFRONT_DISTRIBUTION_ID}" ]; then
+          echo "Invalidating CloudFront cache..."
+          aws cloudfront create-invalidation \
+            --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} \
+            --paths "/*"
+        fi
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: build
+  name: docusaurus-build-$(date +%Y%m%d-%H%M%S)
+
+cache:
+  paths:
+    - 'node_modules/**/*'
