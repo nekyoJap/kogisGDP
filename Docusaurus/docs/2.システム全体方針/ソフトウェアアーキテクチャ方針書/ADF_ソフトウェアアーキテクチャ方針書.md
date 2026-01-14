@@ -3,7 +3,8 @@
 出力はすべてMarkdown形式で記載してください（JSON形式・CSV形式は禁止）。\
 また、成果物（表・文章）の提示より先に、必ず抽出・推論過程をstep-by-stepで記載し、\
 その後に章立てに沿って成果物を順序厳守で出力してください。\
-推測による情報補完は禁止し、不明点は必ず「未確定」と明記してください。
+推測による情報補完は禁止し、不明点は必ず「未確定」と明記してください。\
+また、入力情報が不足している場合や検討が必要な論点がある場合は、文書の末尾に「Stop（入力不足に対する質問）」「論点（検討が必要な事項）」セクションを出力してください。
 
 ---
 
@@ -243,10 +244,10 @@ BC間の関係は、コンテキストマップで定義されたパターンに
 **表10 — 各層の責務と配置要素**
 | 層 | 責務 | 配置要素 |
 |----|------|----------|
-| Domain | ビジネスルール・ドメインロジックの表現 | Entity, Value Object, Domain Service, Domain Event, Repository Interface |
-| Application | ユースケースの実現、アプリケーション固有のビジネスルール | Use Case (Interactor), Input Port, Output Port, Application Service |
-| Interface Adapters | 外部との入出力の変換 | Controller, Presenter, Gateway Implementation, Repository Implementation |
-| Frameworks & Drivers | フレームワーク・ドライバ・外部サービス | Web Framework, ORM, External API Client, Message Broker |
+| エンティティ層 | ビジネスルール・ドメインロジックの表現 | Entity, Value Object, Domain Service, Domain Event, Repository Interface |
+| ユースケース層 | ユースケースの実現、アプリケーション固有のビジネスルール | Use Case (Interactor), Input Port, Output Port, Application Service |
+| アダプタ層 | 外部との入出力の変換 | Controller, Presenter, Gateway Implementation, Repository Implementation |
+| 外部フレームワークとドライバー | フレームワーク・ドライバ・外部サービス | Web Framework, ORM, External API Client, Message Broker |
 
 ### 7.4 依存性ルール
 
@@ -502,3 +503,15 @@ SBE（Specification by Example）に基づくLiving Documentationを採用する
 | 振る舞いの同期 | Gherkinテストの継続的実行により、振る舞い仕様とコードの同期を保証する |
 | 構造の同期 | 構造仕様からの再生成と差分検出により、構造仕様とコードの同期を検証する |
 | 乖離の検出 | CI/CDでの自動検証により、仕様とコードの乖離を早期に検出する |
+
+---
+
+## Stop（入力不足に対する質問）
+
+（入力情報が不足している場合、ここに質問を記載する）
+
+---
+
+## 論点（検討が必要な事項）
+
+（検討が必要な論点がある場合、ここに記載する）
