@@ -133,8 +133,8 @@ sidebar_position: 1
 | traceId | トレースID | 必須 | UUID形式（例：550e8400-e29b-41d4-a716-446655440000） |
 | spanId | スパンID | 推奨 | UUID形式 |
 | userId | 操作ユーザーID | 必須（認証後） | システム内部ID |
-| bcName | BC名 | 必須 | 例：売上確定BC、請求BC |
-| serviceName | サービス名 | 必須 | 例：SalesConfirmationService |
+| bcName | BC名 | 必須 | 例：売上確定BC（例）、請求BC（例） |
+| serviceName | サービス名 | 必須 | 例：SalesConfirmationService（例） |
 | message | ログメッセージ | 必須 | 人間可読なメッセージ |
 | context | 追加コンテキスト情報 | 任意 | JSON形式の追加情報 |
 | errorCode | エラーコード | エラー時必須 | システム定義のエラーコード |
@@ -190,7 +190,7 @@ sidebar_position: 1
 | resultDetail | 結果詳細 | 成功理由、失敗理由 |
 | sourceIP | 接続元IPアドレス | 192.168.1.100 |
 | userAgent | ユーザーエージェント | Mozilla/5.0... |
-| bcName | BC名 | 売上確定BC |
+| bcName | BC名 | 売上確定BC（例） |
 | traceId | トレースID | UUID |
 
 ### 6.3 監査ログ出力場所
@@ -349,9 +349,9 @@ sidebar_position: 1
   "traceId": "550e8400-e29b-41d4-a716-446655440000",
   "spanId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
   "userId": "USER12345",
-  "bcName": "売上確定BC",
-  "serviceName": "SalesConfirmationService",
-  "message": "売上確定処理を開始しました",
+  "bcName": "売上確定BC（例）",
+  "serviceName": "SalesConfirmationService（例）",
+  "message": "売上確定処理を開始しました（例）",
   "context": {
     "salesId": "SALES20260114001",
     "amount": 10000,
