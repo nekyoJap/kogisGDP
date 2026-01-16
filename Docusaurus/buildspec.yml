@@ -1,61 +1,103 @@
 version: 0.2
 
 # AWS CodeBuild用のビルド設定ファイル
-# このファイルはCodeBuildプロジェクトで自動的に読み込まれます
+# Docusaurusを静的サイトとしてS3にデプロイします
+# 
+# 想定環境:
+#   - プロジェクト名: hcredit
+#   - 環境: poc
+#   - S3バケット: hcredit-poc-web-content-703697785925
+#   - リージョン: ap-northeast-1
 
 env:
   variables:
     NODE_VERSION: "18"
-  parameter-store:
-    # Systems Manager Parameter Storeから取得（推奨）
-    # S3_BUCKET_NAME: /docusaurus/s3-bucket-name
-    # CLOUDFRONT_DISTRIBUTION_ID: /docusaurus/cloudfront-id
-  # または環境変数で直接設定
-  # secrets-manager:
-  #   AWS_ACCESS_KEY: /docusaurus/credentials:access_key
-  #   AWS_SECRET_KEY: /docusaurus/credentials:secret_key
+    # ソースコードのディレクトリ（S3 sourceからの相対パス）
+    DOCUSAURUS_DIR: "Docusaurus"
+  # 以下は環境変数またはCodeBuildプロジェクト設定から注入
+  # S3_BUCKET_NAME: "hcredit-poc-web-content-703697785925"
+  # CLOUDFRONT_DISTRIBUTION_ID: ""（CloudFront作成後に設定）
 
 phases:
   install:
     runtime-versions:
       nodejs: 18
     commands:
-      - echo "Installing dependencies..."
-      - npm ci
-  
-  pre_build:
-    commands:
-      - echo "Pre-build phase..."
+      - echo "=== Install Phase ==="
       - node --version
       - npm --version
+      
+  pre_build:
+    commands:
+      - echo "=== Pre-build Phase ==="
+      - echo "Current directory: $(pwd)"
+      - ls -la
+      # Docusaurusディレクトリに移動して依存関係をインストール
+      - cd ${DOCUSAURUS_DIR}
+      - echo "Installing npm dependencies..."
+      - npm ci --prefer-offline
+      - echo "Dependencies installed successfully!"
   
   build:
     commands:
-      - echo "Building Docusaurus..."
+      - echo "=== Build Phase ==="
+      - cd ${DOCUSAURUS_DIR}
+      - echo "Building Docusaurus static site..."
       - npm run build
+      - echo "Build completed successfully!"
+      - ls -la build/
   
   post_build:
     commands:
-      - echo "Deploying to S3..."
-      # S3へのデプロイ
-      - aws s3 sync build/ s3://${S3_BUCKET_NAME} --delete --exclude ".git/*"
-      - echo "Deployment completed!"
-      
-      # CloudFrontのキャッシュクリア（オプション）
+      - echo "=== Post-build Phase ==="
+      - cd ${CODEBUILD_SRC_DIR}
+      # S3_BUCKET_NAMEが設定されている場合のみデプロイ
       - |
-        if [ ! -z "${CLOUDFRONT_DISTRIBUTION_ID}" ]; then
-          echo "Invalidating CloudFront cache..."
+        if [ ! -z "${S3_BUCKET_NAME}" ]; then
+          echo "Deploying to S3 bucket: ${S3_BUCKET_NAME}"
+          aws s3 sync ${DOCUSAURUS_DIR}/build/ s3://${S3_BUCKET_NAME}/ \
+            --delete \
+            --exclude ".git/*" \
+            --cache-control "public, max-age=31536000, immutable" \
+            --exclude "*.html" \
+            --exclude "sitemap.xml" \
+            --exclude "robots.txt"
+          
+          # HTMLファイルはキャッシュしない
+          aws s3 sync ${DOCUSAURUS_DIR}/build/ s3://${S3_BUCKET_NAME}/ \
+            --exclude "*" \
+            --include "*.html" \
+            --include "sitemap.xml" \
+            --include "robots.txt" \
+            --cache-control "public, max-age=0, must-revalidate"
+          
+          echo "S3 deployment completed!"
+        else
+          echo "S3_BUCKET_NAME not set, skipping S3 deployment."
+        fi
+      
+      # CloudFrontのキャッシュクリア（Distribution IDが設定されている場合のみ）
+      - |
+        if [ ! -z "${CLOUDFRONT_DISTRIBUTION_ID}" ] && [ "${CLOUDFRONT_DISTRIBUTION_ID}" != "None" ]; then
+          echo "Invalidating CloudFront cache for distribution: ${CLOUDFRONT_DISTRIBUTION_ID}"
           aws cloudfront create-invalidation \
             --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} \
             --paths "/*"
+          echo "CloudFront cache invalidation initiated!"
+        else
+          echo "CLOUDFRONT_DISTRIBUTION_ID not set, skipping cache invalidation."
         fi
+      
+      - echo "=== Deployment process completed! ==="
 
 artifacts:
   files:
     - '**/*'
-  base-directory: build
+  base-directory: Docusaurus/build
   name: docusaurus-build-$(date +%Y%m%d-%H%M%S)
+  discard-paths: no
 
 cache:
   paths:
-    - 'node_modules/**/*'
+    - 'Docusaurus/node_modules/**/*'
+    - '/root/.npm/**/*'
