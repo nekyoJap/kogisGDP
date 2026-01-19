@@ -52,10 +52,11 @@ phases:
       - echo "=== Post-build Phase ==="
       - cd ${CODEBUILD_SRC_DIR}
       # S3_BUCKET_NAMEが設定されている場合のみデプロイ
+      # CloudFrontで /docs/* パスを使用するため、S3のdocs/ディレクトリにデプロイ
       - |
         if [ ! -z "${S3_BUCKET_NAME}" ]; then
-          echo "Deploying to S3 bucket: ${S3_BUCKET_NAME}"
-          aws s3 sync ${DOCUSAURUS_DIR}/build/ s3://${S3_BUCKET_NAME}/ \
+          echo "Deploying to S3 bucket: ${S3_BUCKET_NAME}/docs/"
+          aws s3 sync ${DOCUSAURUS_DIR}/build/ s3://${S3_BUCKET_NAME}/docs/ \
             --delete \
             --exclude ".git/*" \
             --cache-control "public, max-age=31536000, immutable" \
@@ -64,7 +65,7 @@ phases:
             --exclude "robots.txt"
           
           # HTMLファイルはキャッシュしない
-          aws s3 sync ${DOCUSAURUS_DIR}/build/ s3://${S3_BUCKET_NAME}/ \
+          aws s3 sync ${DOCUSAURUS_DIR}/build/ s3://${S3_BUCKET_NAME}/docs/ \
             --exclude "*" \
             --include "*.html" \
             --include "sitemap.xml" \
