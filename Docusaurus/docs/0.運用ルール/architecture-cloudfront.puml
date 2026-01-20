@@ -1,0 +1,115 @@
+@startuml DEV環境 CloudFront パスベースルーティング構成
+
+!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v18.0/dist
+!include AWSPuml/AWSCommon.puml
+!include AWSPuml/NetworkingContentDelivery/CloudFront.puml
+!include AWSPuml/NetworkingContentDelivery/Route53.puml
+!include AWSPuml/Storage/SimpleStorageService.puml
+!include AWSPuml/Compute/Lambda.puml
+!include AWSPuml/NetworkingContentDelivery/ElasticLoadBalancing.puml
+!include AWSPuml/Containers/ElasticContainerService.puml
+!include AWSPuml/SecurityIdentityCompliance/WAF.puml
+
+title DEV環境 CloudFront パスベースルーティング構成
+
+skinparam backgroundColor #FEFEFE
+skinparam componentStyle rectangle
+
+' ユーザー
+actor "ユーザー" as User
+
+' Route53 (PoC環境で管理)
+rectangle "PoC環境 (703697785925)" #LightGray {
+  Route53(route53, "Route53", "hcredit.example.com")
+  note right of route53
+    dev.hcredit.example.com
+    → DEV CloudFront
+  end note
+}
+
+' DEV環境
+rectangle "DEV環境 (696505809298)" #LightBlue {
+  
+  ' Edge Layer
+  package "Edge Layer (グローバル)" {
+    WAF(waf, "WAF", "IPアクセス制限")
+    CloudFront(cloudfront, "CloudFront", "CDN配信")
+    Lambda(lambda_edge, "Lambda@Edge", "認証処理")
+  }
+  
+  ' S3 Storage
+  package "S3 Storage" {
+    SimpleStorageService(s3_web, "S3 Web Content", "hcredit-dev-web-content")
+    
+    rectangle "S3構造" #White {
+      storage "/docs/*" as s3_docs
+      storage "/index.html" as s3_index
+    }
+  }
+  
+  ' Application Layer
+  package "Application Layer (ap-northeast-1)" {
+    ElasticLoadBalancing(alb, "統合ALB", "パスベースルーティング")
+    
+    rectangle "ECS Services" {
+      ElasticContainerService(ecs_web, "ECS Web", "Webアプリ")
+      ElasticContainerService(ecs_api, "ECS API", "API")
+      ElasticContainerService(ecs_dodoai, "ECS DoDoAI", "AI機能")
+    }
+  }
+  
+  ' CI/CD
+  package "CI/CD" {
+    rectangle "CodeBuild" {
+      component "codebuild-docusaurus" as cb_docusaurus
+      component "codebuild-web" as cb_web
+      component "codebuild-api" as cb_api
+    }
+    SimpleStorageService(s3_source, "S3 Source", "ソースコード格納")
+  }
+}
+
+' 外部リポジトリ
+rectangle "Backlog Git" #LightYellow {
+  component "dev_pfm_housecreditcard.git" as git_app
+  component "infrastructure.git" as git_iac
+}
+
+' フロー
+User --> route53 : DNS解決
+route53 --> cloudfront
+cloudfront --> waf : WAFチェック
+cloudfront --> lambda_edge : 認証
+
+' パスベースルーティング
+cloudfront --> s3_docs : "/docs/*"
+cloudfront --> s3_index : "/ (default)"
+cloudfront --> alb : "/web/*, /api/*, /dodoai/*"
+
+' ALBルーティング
+alb --> ecs_web : "/web/*"
+alb --> ecs_api : "/api/*"
+alb --> ecs_dodoai : "/dodoai/*"
+
+' S3構造
+s3_docs --> s3_web
+s3_index --> s3_web
+
+' CI/CD フロー
+git_app ..> s3_source : ソースアップロード
+s3_source --> cb_docusaurus
+cb_docusaurus --> s3_web : "npm build & S3 sync"
+cb_docusaurus ..> cloudfront : "キャッシュ無効化"
+
+git_iac ..> s3_source : IaCソース
+
+legend right
+  |= パス |= オリジン |= 用途 |
+  | / (default) | S3 | Welcomeページ |
+  | /docs/* | S3 | Docusaurus |
+  | /web/* | ALB | Webアプリ |
+  | /api/* | ALB | API |
+  | /dodoai/* | ALB | DoDoAI |
+endlegend
+
+@enduml

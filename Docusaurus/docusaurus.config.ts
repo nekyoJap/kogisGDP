@@ -7,9 +7,10 @@ const config: Config = {
   tagline: 'プロジェクト仕様書',
   favicon: 'img/favicon.ico',
 
-  // 本番環境のURL設定（デプロイ時に更新）
+  // 本番環境のURL設定（CloudFront経由でアクセス）
+  // 環境変数 SITE_URL でオーバーライド可能
   url: 'https://your-docusaurus-site.example.com',
-  baseUrl: '/',
+  baseUrl: '/docs/',
 
   // GitHub pages デプロイメント設定（使用する場合）
   organizationName: 'your-org',
