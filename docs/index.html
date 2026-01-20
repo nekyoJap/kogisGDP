@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kogisGDP - 競輪予想ボード</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚴 kogisGDP 競輪予想ボード</h1>
+            <p class="subtitle">ドラッグ&ドロップで展開予想を作成</p>
+        </header>
+
+        <main>
+            <!-- レース情報入力 -->
+            <section class="race-info">
+                <h2>📋 レース情報</h2>
+                <div class="race-form">
+                    <div class="form-group">
+                        <label for="raceName">レース名</label>
+                        <input type="text" id="raceName" placeholder="例: 川崎競輪 第1レース">
+                    </div>
+                    <div class="form-group">
+                        <label for="raceDate">開催日</label>
+                        <input type="date" id="raceDate">
+                    </div>
+                </div>
+            </section>
+
+            <!-- 選手一覧 -->
+            <section class="players-section">
+                <h2>🎯 選手一覧（ドラッグして配置）</h2>
+                <div class="players-container" id="playersContainer">
+                    <!-- 選手カードは動的に生成 -->
+                </div>
+            </section>
+
+            <!-- 予想ボード -->
+            <section class="prediction-board">
+                <h2>📊 展開予想ボード</h2>
+                <div class="board-container">
+                    <!-- 周回ヘッダー -->
+                    <div class="board-header">
+                        <div class="position-label"></div>
+                        <div class="lap">スタート</div>
+                        <div class="lap">1周目</div>
+                        <div class="lap">2周目</div>
+                        <div class="lap">最終周</div>
+                        <div class="lap">ゴール</div>
+                    </div>
+                    
+                    <!-- ポジション行 -->
+                    <div class="board-row" data-position="1">
+                        <div class="position-label">1位</div>
+                        <div class="drop-zone" data-lap="start" data-position="1"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="1"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="1"></div>
+                        <div class="drop-zone" data-lap="final" data-position="1"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="1"></div>
+                    </div>
+                    <div class="board-row" data-position="2">
+                        <div class="position-label">2位</div>
+                        <div class="drop-zone" data-lap="start" data-position="2"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="2"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="2"></div>
+                        <div class="drop-zone" data-lap="final" data-position="2"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="2"></div>
+                    </div>
+                    <div class="board-row" data-position="3">
+                        <div class="position-label">3位</div>
+                        <div class="drop-zone" data-lap="start" data-position="3"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="3"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="3"></div>
+                        <div class="drop-zone" data-lap="final" data-position="3"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="3"></div>
+                    </div>
+                    <div class="board-row" data-position="4">
+                        <div class="position-label">4位</div>
+                        <div class="drop-zone" data-lap="start" data-position="4"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="4"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="4"></div>
+                        <div class="drop-zone" data-lap="final" data-position="4"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="4"></div>
+                    </div>
+                    <div class="board-row" data-position="5">
+                        <div class="position-label">5位</div>
+                        <div class="drop-zone" data-lap="start" data-position="5"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="5"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="5"></div>
+                        <div class="drop-zone" data-lap="final" data-position="5"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="5"></div>
+                    </div>
+                    <div class="board-row" data-position="6">
+                        <div class="position-label">6位</div>
+                        <div class="drop-zone" data-lap="start" data-position="6"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="6"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="6"></div>
+                        <div class="drop-zone" data-lap="final" data-position="6"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="6"></div>
+                    </div>
+                    <div class="board-row" data-position="7">
+                        <div class="position-label">7位</div>
+                        <div class="drop-zone" data-lap="start" data-position="7"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="7"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="7"></div>
+                        <div class="drop-zone" data-lap="final" data-position="7"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="7"></div>
+                    </div>
+                    <div class="board-row" data-position="8">
+                        <div class="position-label">8位</div>
+                        <div class="drop-zone" data-lap="start" data-position="8"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="8"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="8"></div>
+                        <div class="drop-zone" data-lap="final" data-position="8"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="8"></div>
+                    </div>
+                    <div class="board-row" data-position="9">
+                        <div class="position-label">9位</div>
+                        <div class="drop-zone" data-lap="start" data-position="9"></div>
+                        <div class="drop-zone" data-lap="lap1" data-position="9"></div>
+                        <div class="drop-zone" data-lap="lap2" data-position="9"></div>
+                        <div class="drop-zone" data-lap="final" data-position="9"></div>
+                        <div class="drop-zone" data-lap="goal" data-position="9"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- アクションボタン -->
+            <section class="actions">
+                <button class="btn btn-primary" onclick="savePrediction()">💾 予想を保存</button>
+                <button class="btn btn-secondary" onclick="clearBoard()">🗑️ ボードをクリア</button>
+                <button class="btn btn-info" onclick="exportPrediction()">📤 エクスポート</button>
+            </section>
+
+            <!-- 予想結果表示 -->
+            <section class="result-section" id="resultSection" style="display: none;">
+                <h2>📝 予想結果</h2>
+                <div id="predictionResult"></div>
+            </section>
+
+            <!-- コメント入力 -->
+            <section class="comments-section">
+                <h2>💬 予想コメント</h2>
+                <textarea id="predictionComment" placeholder="予想の根拠やメモを入力..."></textarea>
+            </section>
+        </main>
+
+        <footer>
+            <p>kogisGDP - 競輪AI予想システム | <a href="https://github.com/nekyoJap/kogisGDP" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
