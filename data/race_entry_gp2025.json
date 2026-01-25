@@ -1,0 +1,205 @@
+{
+  "raceInfo": {
+    "date": "2025-12-30",
+    "venue": "平塚",
+    "raceNumber": 11,
+    "raceName": "KEIRINグランプリ2025",
+    "grade": "GP",
+    "startTime": "16:30",
+    "prize1st": 140000000
+  },
+  "entries": [
+    {
+      "frameNumber": 1,
+      "carNumber": 1,
+      "name": "郡司 浩平",
+      "prefecture": "神奈川",
+      "age": 35,
+      "term": 99,
+      "rank": "SS",
+      "style": "両",
+      "gear": 3.92,
+      "score": 115.23,
+      "recent": {
+        "S": 7, "B": 8,
+        "nige": 2, "makuri": 9, "sashi": 2, "mark": 0,
+        "win1": 9, "win2": 4, "win3": 1, "out": 8
+      },
+      "winRate": 40.9,
+      "top2Rate": 59.0,
+      "top3Rate": 63.6,
+      "prediction": "△"
+    },
+    {
+      "frameNumber": 2,
+      "carNumber": 2,
+      "name": "寺崎 浩平",
+      "prefecture": "福井",
+      "age": 31,
+      "term": 117,
+      "rank": "SS",
+      "style": "逃",
+      "gear": 3.92,
+      "score": 117.58,
+      "recent": {
+        "S": 2, "B": 9,
+        "nige": 4, "makuri": 4, "sashi": 0, "mark": 0,
+        "win1": 2, "win2": 6, "win3": 3, "out": 6
+      },
+      "winRate": 11.7,
+      "top2Rate": 47.0,
+      "top3Rate": 64.7,
+      "prediction": ""
+    },
+    {
+      "frameNumber": 3,
+      "carNumber": 3,
+      "name": "眞杉 匠",
+      "prefecture": "栃木",
+      "age": 26,
+      "term": 113,
+      "rank": "SS",
+      "style": "逃",
+      "gear": 3.92,
+      "score": 116.37,
+      "recent": {
+        "S": 2, "B": 7,
+        "nige": 3, "makuri": 5, "sashi": 0, "mark": 0,
+        "win1": 5, "win2": 3, "win3": 1, "out": 8
+      },
+      "winRate": 29.4,
+      "top2Rate": 47.0,
+      "top3Rate": 52.9,
+      "prediction": "注"
+    },
+    {
+      "frameNumber": 4,
+      "carNumber": 4,
+      "name": "南 修二",
+      "prefecture": "大阪",
+      "age": 44,
+      "term": 88,
+      "rank": "SS",
+      "style": "追",
+      "gear": 3.92,
+      "score": 117.40,
+      "recent": {
+        "S": 1, "B": 1,
+        "nige": 0, "makuri": 4, "sashi": 5, "mark": 2,
+        "win1": 8, "win2": 3, "win3": 3, "out": 6
+      },
+      "winRate": 40.0,
+      "top2Rate": 55.0,
+      "top3Rate": 70.0,
+      "prediction": ""
+    },
+    {
+      "frameNumber": 4,
+      "carNumber": 5,
+      "name": "吉田 拓矢",
+      "prefecture": "茨城",
+      "age": 30,
+      "term": 107,
+      "rank": "SS",
+      "style": "両",
+      "gear": 3.92,
+      "score": 118.61,
+      "recent": {
+        "S": 1, "B": 3,
+        "nige": 0, "makuri": 4, "sashi": 1, "mark": 0,
+        "win1": 4, "win2": 1, "win3": 4, "out": 5
+      },
+      "winRate": 28.5,
+      "top2Rate": 35.7,
+      "top3Rate": 64.2,
+      "prediction": "×"
+    },
+    {
+      "frameNumber": 5,
+      "carNumber": 6,
+      "name": "阿部 拓真",
+      "prefecture": "宮城",
+      "age": 35,
+      "term": 107,
+      "rank": "SS",
+      "style": "両",
+      "gear": 3.92,
+      "score": 109.00,
+      "recent": {
+        "S": 9, "B": 0,
+        "nige": 0, "makuri": 1, "sashi": 5, "mark": 2,
+        "win1": 5, "win2": 3, "win3": 4, "out": 11
+      },
+      "winRate": 21.7,
+      "top2Rate": 34.7,
+      "top3Rate": 52.1,
+      "prediction": ""
+    },
+    {
+      "frameNumber": 5,
+      "carNumber": 7,
+      "name": "脇本 雄太",
+      "prefecture": "福井",
+      "age": 36,
+      "term": 94,
+      "rank": "SS",
+      "style": "逃",
+      "gear": 3.92,
+      "score": 116.20,
+      "recent": {
+        "S": 0, "B": 0,
+        "nige": 0, "makuri": 7, "sashi": 0, "mark": 0,
+        "win1": 6, "win2": 1, "win3": 0, "out": 3
+      },
+      "winRate": 60.0,
+      "top2Rate": 70.0,
+      "top3Rate": 70.0,
+      "prediction": "◎"
+    },
+    {
+      "frameNumber": 6,
+      "carNumber": 8,
+      "name": "嘉永 泰斗",
+      "prefecture": "熊本",
+      "age": 27,
+      "term": 113,
+      "rank": "SS",
+      "style": "逃",
+      "gear": 3.92,
+      "score": 117.14,
+      "recent": {
+        "S": 0, "B": 2,
+        "nige": 0, "makuri": 8, "sashi": 1, "mark": 0,
+        "win1": 6, "win2": 3, "win3": 3, "out": 9
+      },
+      "winRate": 28.5,
+      "top2Rate": 42.8,
+      "top3Rate": 57.1,
+      "prediction": "▲"
+    },
+    {
+      "frameNumber": 6,
+      "carNumber": 9,
+      "name": "古性 優作",
+      "prefecture": "大阪",
+      "age": 34,
+      "term": 100,
+      "rank": "SS",
+      "style": "両",
+      "gear": 3.92,
+      "score": 118.70,
+      "recent": {
+        "S": 4, "B": 0,
+        "nige": 0, "makuri": 5, "sashi": 4, "mark": 0,
+        "win1": 6, "win2": 3, "win3": 4, "out": 8
+      },
+      "winRate": 28.5,
+      "top2Rate": 42.8,
+      "top3Rate": 61.9,
+      "prediction": "○"
+    }
+  ],
+  "lineUp": {
+    "comment": "近畿の並びは脇本が番手。寺崎の引き出しで３年ぶりＶ奪還。眞杉に託す吉田や、混戦を捲る郡司が逆転候補。"
+  }
+}
