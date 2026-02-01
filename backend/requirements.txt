@@ -1,0 +1,11 @@
+# kogisGDP Backend Dependencies
+
+# HTTP Client
+requests>=2.31.0
+
+# HTML Parser
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+
+# Type hints (Python 3.11+)
+typing-extensions>=4.8.0
