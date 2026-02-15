@@ -613,15 +613,156 @@
             font-size: 0.8rem;
         }
 
-        /* ===== レスポンシブ ===== */
+        /* ===== レスポンシブ: タブレット ===== */
+        @media (max-width: 900px) {
+            .feature-grid { grid-template-columns: 1fr; }
+        }
+
+        /* ===== レスポンシブ: スマホ ===== */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 1.8rem; }
-            .hero .lead { font-size: 1rem; }
-            .hero-cta { flex-direction: column; align-items: center; }
-            .stats-row { gap: 30px; }
-            .pricing-grid { grid-template-columns: 1fr; }
+            /* --- ナビ --- */
+            .mock-nav { padding: 0 8px; -webkit-overflow-scrolling: touch; }
+            .mock-nav .nav-label { padding: 10px 8px 10px 4px; font-size: 0.65rem; }
+            .mock-nav button { padding: 12px 14px; font-size: 0.8rem; min-height: 44px; }
+
+            /* --- 共通 --- */
+            .container { padding: 0 14px; }
+            .card { padding: 18px 14px; border-radius: 12px; margin-bottom: 14px; }
+            .btn { min-height: 44px; }
+            .btn-lg { padding: 14px 24px; font-size: 1rem; }
+            .section-title { font-size: 1rem; }
+
+            /* --- LP: ヒーロー --- */
+            .hero { padding: 50px 16px 40px; }
+            .hero h1 { font-size: 1.7rem; line-height: 1.3; }
+            .hero .lead { font-size: 0.95rem; margin-bottom: 24px; }
+            .hero .lead br { display: none; }
+            .hero-cta { flex-direction: column; align-items: stretch; padding: 0 20px; }
+            .hero-cta .btn { justify-content: center; }
+
+            /* --- LP: フィーチャー --- */
+            .features { padding: 36px 16px; }
+            .features h2 { font-size: 1.4rem; }
+            .feature-grid { grid-template-columns: 1fr; gap: 14px; }
+            .feature-card { padding: 22px 18px; }
+
+            /* --- LP: 最新予想 --- */
+            .latest-predictions-grid { grid-template-columns: 1fr !important; }
+
+            /* --- LP: ソーシャルプルーフ --- */
+            .social-proof { padding: 36px 16px; }
+            .stats-row { gap: 24px; }
+            .stat-item .num { font-size: 2rem; }
+
+            /* --- 予想詳細: ヘッダー --- */
+            .page-header { padding: 20px 14px 18px; }
+            .page-header h1 { font-size: 1.2rem; line-height: 1.4; }
+            .page-header .breadcrumb { font-size: 0.72rem; }
+            .race-meta { gap: 8px; font-size: 0.75rem; }
+            .race-meta span { padding: 3px 8px; }
+
+            /* --- 予想詳細: コンテンツ --- */
+            .content-area { padding: 16px 0; }
+            .two-col { grid-template-columns: 1fr; gap: 0; }
+
+            /* --- 予想詳細: ライン構成 --- */
+            .line-block { padding: 8px 10px; gap: 6px; }
+            .line-block .line-label { width: 48px; font-size: 0.7rem; }
+            .waku { width: 26px; height: 26px; font-size: 0.78rem; }
+
+            /* --- 予想詳細: タイムライン --- */
+            .timeline { padding-left: 22px; }
+            .timeline-item { padding: 12px 14px; margin-bottom: 14px; }
+            .timeline-item p { font-size: 0.82rem; }
+            .timeline-item::before { left: -16px; width: 8px; height: 8px; }
+
+            /* --- 予想詳細: 買い目 --- */
+            .bet-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+            .bet-item { padding: 10px 8px; }
+            .bet-item .bet-type { font-size: 0.65rem; }
+            .bet-item .bet-nums { font-size: 1rem; }
+            .lock-cta p { font-size: 0.8rem; }
+
+            /* --- 予想詳細: 予想印 --- */
+            .player-eval-mini { padding: 12px 10px; gap: 8px; }
+            .player-eval-mini .mark { font-size: 1.2rem; width: 22px; }
+            .player-eval-mini .name { font-size: 0.88rem; }
+            .player-eval-mini .detail { font-size: 0.72rem; }
+            .player-eval-mini .reason { font-size: 0.76rem; padding: 5px 8px; }
+
+            /* --- 選手評価: フィルター --- */
+            .eval-filter-bar { gap: 6px; }
+            .filter-chip { padding: 8px 14px; font-size: 0.75rem; min-height: 38px; display: inline-flex; align-items: center; }
+
+            /* --- 選手評価: テーブル → カード表示 --- */
+            .eval-table thead { display: none; }
+            .eval-table,
+            .eval-table tbody,
+            .eval-table tbody tr,
+            .eval-table tbody td { display: block; width: 100%; }
+            .eval-table tbody tr {
+                background: var(--card);
+                border: 1px solid var(--border);
+                border-radius: 12px;
+                padding: 14px;
+                margin-bottom: 10px;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 6px 12px;
+            }
+            .eval-table tbody td {
+                border-bottom: none;
+                padding: 4px 0;
+                text-align: left;
+            }
+            .eval-table tbody td:first-child {
+                grid-column: 1 / -1;
+                padding-bottom: 8px;
+                margin-bottom: 4px;
+                border-bottom: 1px solid var(--border);
+            }
+            .eval-table tbody td::before {
+                content: attr(data-label);
+                display: block;
+                font-size: 0.65rem;
+                font-weight: 700;
+                color: var(--muted);
+                margin-bottom: 2px;
+            }
+            .eval-table tbody td:first-child::before { display: none; }
+            .eval-bar { width: 100%; max-width: 80px; }
+
+            /* --- 選手評価: 詳細カード --- */
+            .eval-detail-modal { padding: 18px 14px; }
+            .radar-placeholder { width: 160px; height: 160px; }
+
+            /* --- 料金プラン --- */
+            .pricing-hero { padding: 40px 16px; }
+            .pricing-hero h1 { font-size: 1.6rem; }
+            .pricing-hero p { font-size: 0.9rem; }
+            .pricing-hero p br { display: none; }
+            .pricing-grid { grid-template-columns: 1fr; padding: 30px 14px 40px; gap: 20px; margin-top: -30px; }
+            .price-card { padding: 28px 20px; }
             .price-card.popular { transform: none; }
+            .price-card.popular:hover { transform: none; }
+            .price-card .price { font-size: 2rem; }
+            .price-card ul li { font-size: 0.84rem; padding: 7px 0; }
+
+            /* --- FAQ --- */
+            .faq { padding: 30px 14px 40px; }
+            .faq-item summary { padding: 14px 16px; font-size: 0.9rem; }
+            .faq-item .answer { padding: 14px 16px; font-size: 0.84rem; }
+        }
+
+        /* ===== レスポンシブ: 小型スマホ (iPhone SE等) ===== */
+        @media (max-width: 380px) {
+            .hero h1 { font-size: 1.4rem; }
+            .hero .lead { font-size: 0.88rem; }
+            .mock-nav button { padding: 10px 10px; font-size: 0.72rem; }
+            .card { padding: 14px 12px; }
+            .player-eval-mini { flex-wrap: wrap; }
             .bet-grid { grid-template-columns: 1fr; }
+            .price-card .price { font-size: 1.8rem; }
         }
     </style>
 </head>
@@ -683,7 +824,7 @@
     <section style="padding: 0 20px 60px;">
         <div class="container">
             <h2 style="font-size:1.5rem; margin-bottom: 20px;">最新の予想</h2>
-            <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px;">
+            <div class="latest-predictions-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px;">
                 <div class="card" style="cursor:pointer;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
                         <span class="badge badge-gp">GP</span>
@@ -988,22 +1129,22 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="eval-rank s">SS</span></td>
-                            <td>追込</td>
-                            <td>&#10005;</td>
-                            <td>
+                            <td data-label="級班"><span class="eval-rank s">SS</span></td>
+                            <td data-label="タイプ">追込</td>
+                            <td data-label="先行意欲">&#10005;</td>
+                            <td data-label="スピード">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:90%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="仕掛け">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:80%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="スタミナ">
                                 <span class="eval-bar"><span class="fill fill-mid" style="width:65%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="競輪IQ">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:95%;"></span></span>
                             </td>
-                            <td><span class="eval-rank s">S</span></td>
+                            <td data-label="総合"><span class="eval-rank s">S</span></td>
                         </tr>
                         <tr>
                             <td>
@@ -1014,22 +1155,22 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="eval-rank s">SS</span></td>
-                            <td>自在</td>
-                            <td>&#9678;</td>
-                            <td>
+                            <td data-label="級班"><span class="eval-rank s">SS</span></td>
+                            <td data-label="タイプ">自在</td>
+                            <td data-label="先行意欲">&#9678;</td>
+                            <td data-label="スピード">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:95%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="仕掛け">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:90%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="スタミナ">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:85%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="競輪IQ">
                                 <span class="eval-bar"><span class="fill fill-mid" style="width:70%;"></span></span>
                             </td>
-                            <td><span class="eval-rank s">S</span></td>
+                            <td data-label="総合"><span class="eval-rank s">S</span></td>
                         </tr>
                         <tr>
                             <td>
@@ -1040,22 +1181,22 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="eval-rank s">SS</span></td>
-                            <td>先行</td>
-                            <td>&#9678;</td>
-                            <td>
+                            <td data-label="級班"><span class="eval-rank s">SS</span></td>
+                            <td data-label="タイプ">先行</td>
+                            <td data-label="先行意欲">&#9678;</td>
+                            <td data-label="スピード">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:88%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="仕掛け">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:85%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="スタミナ">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:90%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="競輪IQ">
                                 <span class="eval-bar"><span class="fill fill-mid" style="width:60%;"></span></span>
                             </td>
-                            <td><span class="eval-rank s">S</span></td>
+                            <td data-label="総合"><span class="eval-rank s">S</span></td>
                         </tr>
                         <tr>
                             <td>
@@ -1066,22 +1207,22 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="eval-rank a">S1</span></td>
-                            <td>追込</td>
-                            <td>&#9651;</td>
-                            <td>
+                            <td data-label="級班"><span class="eval-rank a">S1</span></td>
+                            <td data-label="タイプ">追込</td>
+                            <td data-label="先行意欲">&#9651;</td>
+                            <td data-label="スピード">
                                 <span class="eval-bar"><span class="fill fill-mid" style="width:70%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="仕掛け">
                                 <span class="eval-bar"><span class="fill fill-mid" style="width:60%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="スタミナ">
                                 <span class="eval-bar"><span class="fill fill-mid" style="width:65%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="競輪IQ">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:80%;"></span></span>
                             </td>
-                            <td><span class="eval-rank a">A</span></td>
+                            <td data-label="総合"><span class="eval-rank a">A</span></td>
                         </tr>
                         <tr>
                             <td>
@@ -1092,22 +1233,22 @@
                                     </div>
                                 </div>
                             </td>
-                            <td><span class="eval-rank s">SS</span></td>
-                            <td>先行</td>
-                            <td>&#9675;</td>
-                            <td>
+                            <td data-label="級班"><span class="eval-rank s">SS</span></td>
+                            <td data-label="タイプ">先行</td>
+                            <td data-label="先行意欲">&#9675;</td>
+                            <td data-label="スピード">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:92%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="仕掛け">
                                 <span class="eval-bar"><span class="fill fill-high" style="width:88%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="スタミナ">
                                 <span class="eval-bar"><span class="fill fill-mid" style="width:75%;"></span></span>
                             </td>
-                            <td>
+                            <td data-label="競輪IQ">
                                 <span class="eval-bar"><span class="fill fill-mid" style="width:55%;"></span></span>
                             </td>
-                            <td><span class="eval-rank s">S</span></td>
+                            <td data-label="総合"><span class="eval-rank s">S</span></td>
                         </tr>
                     </tbody>
                 </table>
