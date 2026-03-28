@@ -1,0 +1,59 @@
+name: Daily Keirin Prediction
+
+on:
+  schedule:
+    - cron: '0 22 * * *'   # UTC 22:00 = JST 07:00
+  workflow_dispatch:         # 手動実行も可能
+    inputs:
+      date:
+        description: '予想対象日 YYYYMMDD（省略時: JST当日）'
+        required: false
+        default: ''
+
+jobs:
+  predict:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # 予想JSONのコミット・プッシュに必要
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Get target date (JST)
+        id: date
+        run: |
+          if [ -n "${{ github.event.inputs.date }}" ]; then
+            echo "DATE=${{ github.event.inputs.date }}" >> $GITHUB_OUTPUT
+          else
+            echo "DATE=$(TZ='Asia/Tokyo' date '+%Y%m%d')" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Scrape race entries
+        run: python scripts/scrape.py --date ${{ steps.date.outputs.DATE }}
+
+      - name: Generate predictions
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: python scripts/predict.py --date ${{ steps.date.outputs.DATE }}
+
+      - name: Commit and push predictions
+        run: |
+          git config user.name "kogisGDP-bot"
+          git config user.email "bot@kogisGDP.github.io"
+          git add docs/predictions/
+          git add data/raw/
+          # 変更がある場合のみコミット
+          git diff --staged --quiet || git commit -m "予想生成: ${{ steps.date.outputs.DATE }}"
+          git push

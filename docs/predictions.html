@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI予想 | 競輪AI予想システム</title>
+  <link rel="stylesheet" href="predictions.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <h1>🤖 競輪 AI 予想</h1>
+    <div class="subtitle">Claude Haiku × 展開重視 × 毎朝自動生成</div>
+  </header>
+
+  <nav class="site-nav">
+    <a href="index.html">予想ボード</a>
+    <a href="bank.html">バンク版</a>
+    <a href="race-merge.html">出走表マージ</a>
+    <a href="predictions.html" class="active">AI予想</a>
+    <a href="guide/index.html">ガイド</a>
+  </nav>
+
+  <main class="main-content">
+
+    <!-- 日付セレクター -->
+    <div class="date-selector">
+      <label for="date-input">開催日</label>
+      <button class="date-nav-btn" id="date-prev">◀ 前日</button>
+      <input type="date" id="date-input">
+      <button class="date-nav-btn" id="date-next">翌日 ▶</button>
+    </div>
+
+    <!-- 開催場タブ -->
+    <div class="venue-tabs" id="venue-tabs"></div>
+
+    <!-- ステータスメッセージ -->
+    <div class="status-msg" id="status-msg" style="display:none"></div>
+
+    <!-- レースカードグリッド -->
+    <div class="race-cards" id="race-cards"></div>
+
+  </main>
+
+  <footer class="site-footer">
+    <div>
+      <a href="index.html">予想ボード</a>
+      <a href="bank.html">バンク版</a>
+      <a href="race-merge.html">出走表マージ</a>
+      <a href="predictions.html">AI予想</a>
+      <a href="guide/index.html">ガイド</a>
+    </div>
+    <div class="disclaimer">
+      ※ AI予想は参考情報であり的中を保証するものではありません。
+      競輪はギャンブルです。のめりこみに注意してください。
+      <a href="https://www.tergm.jp/" target="_blank" rel="noopener">依存症相談窓口</a>
+    </div>
+  </footer>
+
+  <script src="predictions.js"></script>
+</body>
+</html>
