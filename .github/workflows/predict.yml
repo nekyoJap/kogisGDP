@@ -43,22 +43,20 @@ jobs:
       - name: Scrape race entries
         run: python scripts/scrape.py --date ${{ steps.date.outputs.DATE }}
 
-      - name: Generate predictions
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: python scripts/predict.py --date ${{ steps.date.outputs.DATE }}
+      # 予想生成はAPIキー設定後に有効化する
+      # - name: Generate predictions
+      #   env:
+      #     ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      #   run: python scripts/predict.py --date ${{ steps.date.outputs.DATE }}
 
-      - name: Commit and push predictions
+      - name: Commit and push scraped data
         run: |
           git config user.name "kogisGDP-bot"
           git config user.email "bot@kogisGDP.github.io"
-          # パスが存在する場合のみ add（存在しない場合はスキップ）
-          [ -d docs/predictions ] && git add docs/predictions/ || true
           [ -d data/raw ] && git add data/raw/ || true
-          # 変更がある場合のみコミット・プッシュ
           if git diff --staged --quiet; then
             echo "変更なし。コミットをスキップします。"
           else
-            git commit -m "予想生成: ${{ steps.date.outputs.DATE }}"
+            git commit -m "scrape: ${{ steps.date.outputs.DATE }}"
             git push origin HEAD
           fi
