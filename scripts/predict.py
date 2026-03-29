@@ -210,11 +210,6 @@ def predict_date(date_str: str) -> None:
     """
     指定日の全レース予想を生成し docs/predictions/ に保存する。
     """
-    api_key = os.environ.get("ANTHROPIC_API_KEY")
-    if not api_key:
-        logger.error("環境変数 ANTHROPIC_API_KEY が設定されていません")
-        sys.exit(1)
-
     formatted_date = f"{date_str[:4]}-{date_str[4:6]}-{date_str[6:8]}"
     raw_dir = DATA_DIR / "raw" / formatted_date
     index_path = raw_dir / "index.json"
@@ -229,8 +224,15 @@ def predict_date(date_str: str) -> None:
 
     races = index.get("races", [])
     if not races:
-        logger.warning(f"予想対象レースが 0 件です: {formatted_date}")
+        logger.warning(f"予想対象レースが 0 件です（非開催日または取得失敗）: {formatted_date}")
+        logger.warning("predict をスキップします（API呼び出しなし）")
         return
+
+    # レースがある場合のみ API キーを確認する
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        logger.error("環境変数 ANTHROPIC_API_KEY が設定されていません")
+        sys.exit(1)
 
     # リソース読み込み
     system_prompt = _load_system_prompt()

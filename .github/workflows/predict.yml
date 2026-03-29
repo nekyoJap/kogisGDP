@@ -52,8 +52,13 @@ jobs:
         run: |
           git config user.name "kogisGDP-bot"
           git config user.email "bot@kogisGDP.github.io"
-          git add docs/predictions/
-          git add data/raw/
-          # 変更がある場合のみコミット
-          git diff --staged --quiet || git commit -m "予想生成: ${{ steps.date.outputs.DATE }}"
-          git push
+          # パスが存在する場合のみ add（存在しない場合はスキップ）
+          [ -d docs/predictions ] && git add docs/predictions/ || true
+          [ -d data/raw ] && git add data/raw/ || true
+          # 変更がある場合のみコミット・プッシュ
+          if git diff --staged --quiet; then
+            echo "変更なし。コミットをスキップします。"
+          else
+            git commit -m "予想生成: ${{ steps.date.outputs.DATE }}"
+            git push origin HEAD
+          fi
